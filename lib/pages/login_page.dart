@@ -1,3 +1,4 @@
+import 'package:chat_app_/auth/auth_service.dart';
 import 'package:chat_app_/components/my_button.dart';
 import 'package:chat_app_/components/my_textfield.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,31 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _pwController = TextEditingController();
+
+  void login(BuildContext context) async {
+    //  auth service
+    final authService = AuthService();
+
+    // try login
+
+    try {
+      showDialog(
+        context: context,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+      await authService.signInWithEmailPassword(
+          _emailController.text, _pwController.text, context);
+      Navigator.of(context).pop();
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text(e.toString()),
+              ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +78,7 @@ class LoginPage extends StatelessWidget {
             ),
             MyButton(
               text: 'Login',
-              ontap: () {},
+              ontap: () => login(context),
             ),
             const SizedBox(
               height: 25,
