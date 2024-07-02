@@ -1,38 +1,56 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:chat_app_/auth/auth_service.dart';
 import 'package:chat_app_/components/my_button.dart';
 import 'package:chat_app_/components/my_textfield.dart';
+import 'package:chat_app_/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   final void Function()? ontap;
-  LoginPage({super.key, this.ontap});
+  const LoginPage({super.key, this.ontap});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _pwController = TextEditingController();
 
   void login(BuildContext context) async {
-    //  auth service
+    // Use a parent context
+    final navigatorContext = context;
+
+    // auth service
     final authService = AuthService();
 
     // try login
-
     try {
       showDialog(
-        context: context,
+        context: navigatorContext,
         builder: (context) => const Center(
           child: CircularProgressIndicator(),
         ),
       );
       await authService.signInWithEmailPassword(
           _emailController.text, _pwController.text, context);
-      Navigator.of(context).pop();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+     // if (mounted) {
+        Navigator.of(navigatorContext).pop(); // Close the progress dialog
+     // }
     } catch (e) {
-      showDialog(
-          context: context,
+      if (mounted) {
+        Navigator.of(navigatorContext).pop(); // Close the progress dialog
+        showDialog(
+          context: navigatorContext,
           builder: (context) => AlertDialog(
-                title: Text(e.toString()),
-              ));
+            title: Text(e.toString()),
+          ),
+        );
+      }
     }
   }
 
@@ -92,7 +110,7 @@ class LoginPage extends StatelessWidget {
                       TextStyle(color: Theme.of(context).colorScheme.primary),
                 ),
                 GestureDetector(
-                  onTap: ontap,
+                  onTap: widget.ontap,
                   child: Text('Register now',
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
