@@ -38,9 +38,9 @@ class _LoginPageState extends State<LoginPage> {
           _emailController.text, _pwController.text, context);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
-     // if (mounted) {
-        Navigator.of(navigatorContext).pop(); // Close the progress dialog
-     // }
+      // if (mounted) {
+      Navigator.of(navigatorContext).pop(); // Close the progress dialog
+      // }
     } catch (e) {
       if (mounted) {
         Navigator.of(navigatorContext).pop(); // Close the progress dialog
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
             Icon(
               Icons.message,
               size: 60,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(
               height: 60,
@@ -73,7 +73,9 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               "Welcome back, you've been missed!",
               style: TextStyle(
-                  fontSize: 16, color: Theme.of(context).primaryColor),
+                fontSize: 16,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
             const SizedBox(
               height: 25,
@@ -81,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
             MyTextfield(
               controller: _emailController,
               obscureText: false,
-              hintText: 'Email',
+              hintText: 'Email', focusNode: null,
             ),
             const SizedBox(
               height: 10,
@@ -89,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
             MyTextfield(
               controller: _pwController,
               hintText: 'Password',
-              obscureText: true,
+              obscureText: true, focusNode: null,
             ),
             const SizedBox(
               height: 25,

@@ -68,7 +68,7 @@ class RegisterPage extends StatelessWidget {
             MyTextfield(
               controller: _emailController,
               obscureText: false,
-              hintText: 'Email',
+              hintText: 'Email', focusNode: null,
             ),
             const SizedBox(
               height: 10,
@@ -76,7 +76,7 @@ class RegisterPage extends StatelessWidget {
             MyTextfield(
               controller: _pwController,
               hintText: 'Password',
-              obscureText: true,
+              obscureText: true, focusNode: null,
             ),
             const SizedBox(
               height: 10,
@@ -84,7 +84,7 @@ class RegisterPage extends StatelessWidget {
             MyTextfield(
               controller: _confirmController,
               hintText: 'Confirm Password',
-              obscureText: true,
+              obscureText: true, focusNode: null,
             ),
             const SizedBox(
               height: 25,
